@@ -1,0 +1,26 @@
+import React from 'react';
+import './ProductCard.css';
+
+const ProductCard = ({ product, onEdit }) => {
+    return (
+        <div className="product-card">
+            <div className="product-header">
+                <h3>{product.name}</h3>
+                <span className="product-category">{product.category}</span>
+            </div>
+            <p className="product-description">{product.description}</p>
+            <div className="product-details">
+                <span className="product-price">₹{product.price}</span>
+                <span className={`product-stock ${product.stock < 10 ? 'low-stock' : ''}`}>
+                    Stock: {product.stock}
+                </span>
+            </div>
+            <div className="product-tags">
+                {product.tags && product.tags.map(tag => <span key={tag} className="tag">#{tag}</span>)}
+            </div>
+            <button className="edit-btn" onClick={() => onEdit(product)}>Edit</button>
+        </div>
+    );
+};
+
+export default ProductCard;
