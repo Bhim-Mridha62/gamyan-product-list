@@ -1,8 +1,15 @@
 import React from 'react';
 
-const ProductRow = ({ product, onEdit }) => {
+const ProductRow = ({ product, onEdit, selected, onSelect }) => {
     return (
-        <tr>
+        <tr className={selected ? 'selected-row' : ''}>
+            <td className="checkbox-cell">
+                <input
+                    type="checkbox"
+                    checked={selected}
+                    onChange={() => onSelect(product.id)}
+                />
+            </td>
             <td>
                 <div className="product-name-cell">
                     <strong>{product.name}</strong>

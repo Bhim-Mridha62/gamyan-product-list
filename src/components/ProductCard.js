@@ -1,9 +1,16 @@
 import React from 'react';
 import './ProductCard.css';
 
-const ProductCard = ({ product, onEdit }) => {
+const ProductCard = ({ product, onEdit, selected, onSelect }) => {
     return (
-        <div className="product-card">
+        <div className={`product-card ${selected ? 'selected-card' : ''}`}>
+            <div className="card-checkbox">
+                <input
+                    type="checkbox"
+                    checked={selected}
+                    onChange={() => onSelect(product.id)}
+                />
+            </div>
             <div className="product-header">
                 <h3>{product.name}</h3>
                 <span className="product-category">{product.category}</span>

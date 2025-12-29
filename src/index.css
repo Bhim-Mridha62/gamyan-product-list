@@ -133,3 +133,23 @@ button {
     align-self: flex-end;
   }
 }
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.delete-selected-btn {
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.delete-selected-btn:hover {
+  background-color: #dc2626;
+}

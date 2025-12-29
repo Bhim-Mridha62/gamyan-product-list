@@ -5,35 +5,68 @@ import Pagination from './components/Pagination';
 import ProductForm from './components/ProductForm';
 import { initialProducts } from './data/initialData';
 import './App.css';
+import FilterBar from './components/FilterBar';
 
 function App() {
   const [products, setProducts] = useState(initialProducts);
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'grid'
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [sortOption, setSortOption] = useState('none');
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
-  const itemsPerPage = 5;
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
 
-  // Filter products based on search query
+  // Get unique categories from products
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set(products.map(p => p.category));
+    return Array.from(uniqueCategories).sort();
+  }, [products]);
+
+  // Filter and sort products
   const filteredProducts = useMemo(() => {
-    return products.filter(product =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [products, searchQuery]);
+    let result = products.filter(product => {
+      const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+
+    // Sorting logic
+    if (sortOption !== 'none') {
+      result.sort((a, b) => {
+        switch (sortOption) {
+          case 'price-asc':
+            return a.price - b.price;
+          case 'price-desc':
+            return b.price - a.price;
+          case 'stock-asc':
+            return a.stock - b.stock;
+          case 'stock-desc':
+            return b.stock - a.stock;
+          default:
+            return 0;
+        }
+      });
+    }
+
+    return result;
+  }, [products, searchQuery, selectedCategory, sortOption]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const currentProducts = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
-  }, [filteredProducts, currentPage]);
+  }, [filteredProducts, currentPage, itemsPerPage]);
 
-  // Reset page when search changes
+  // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery]);
+    setSelectedProductIds([]); // Clear selection on filter change
+  }, [searchQuery, selectedCategory, sortOption, itemsPerPage]);
 
   const handleAddProduct = () => {
     setEditingProduct(null);
@@ -64,15 +97,46 @@ function App() {
   const handleDeleteProduct = (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       setProducts(products.filter(p => p.id !== productId));
+      setSelectedProductIds(prev => prev.filter(id => id !== productId));
     }
   }
+
+  const handleSelectProduct = (id) => {
+    setSelectedProductIds(prev =>
+      prev.includes(id) ? prev.filter(pId => pId !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedProductIds(currentProducts.map(p => p.id));
+    } else {
+      setSelectedProductIds([]);
+    }
+  };
+
+  const handleDeleteSelected = () => {
+    if (selectedProductIds.length === 0) return;
+
+    if (window.confirm(`Are you sure you want to delete ${selectedProductIds.length} products?`)) {
+      setProducts(products.filter(p => !selectedProductIds.includes(p.id)));
+      setSelectedProductIds([]);
+    }
+  };
 
   return (
     <div className="app-container">
       <header className="app-header">
         <div className="header-content">
           <h1>Product Manager</h1>
-          <button className="add-btn" onClick={handleAddProduct}>+ Add Product</button>
+          <div className="header-actions">
+            {selectedProductIds.length > 0 && (
+              <button className="delete-selected-btn" onClick={handleDeleteSelected}>
+                Delete Selected ({selectedProductIds.length})
+              </button>
+            )}
+            <button className="add-btn" onClick={handleAddProduct}>+ Add Product</button>
+          </div>
         </div>
       </header>
 
@@ -107,18 +171,31 @@ function App() {
               </svg>
             </button>
           </div>
+          <FilterBar
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+            sortOption={sortOption}
+            onSortChange={setSortOption}
+          />
         </div>
 
         <ProductList
           products={currentProducts}
           viewMode={viewMode}
           onEdit={handleEditProduct}
+          selectedProductIds={selectedProductIds}
+          onSelectProduct={handleSelectProduct}
+          onSelectAll={handleSelectAll}
+          allSelected={currentProducts.length > 0 && currentProducts.every(p => selectedProductIds.includes(p.id))}
         />
 
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={setCurrentPage}
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={setItemsPerPage}
         />
       </main>
 
