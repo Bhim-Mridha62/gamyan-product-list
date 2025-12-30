@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# Gamyan Product List
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based product management application that allows users to view, search, filter, and manage a list of products.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Product List**: View products in both List and Grid views.
+- **Add Product**: Add new products with details like Name, Price, Category, Stock, Description, Tags, and Status.
+- **Edit Product**: Edit existing product details.
+- **Search**: Search products by name or category.
+- **Filter**: Filter products by Category and Status (Active/Inactive).
+- **Sort**: Sort products by Price and Stock (Low to High / High to Low).
+- **Pagination**: Navigate through large lists of products with customizable items per page.
+- **Bulk Actions**: Select multiple products to delete them in bulk.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
+- **Frontend**: React.js
+- **Styling**: CSS3
+- **State Management**: React Hooks (useState, useEffect, useMemo)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js installed on your machine.
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd gamyan-product-list
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Application
+
+Start the development server:
+```bash
+npm start
+```
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Building for Production
 
-### `npm test`
+Build the app for production:
+```bash
+npm run build
+```
+The build artifacts will be stored in the `build/` directory.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Structure
 
-### `npm run build`
+```
+src/
+  components/
+    FilterBar.js       # Filtering and sorting controls
+    Pagination.js      # Pagination controls
+    ProductCard.js     # Card view for a single product
+    ProductForm.js     # Modal form for adding/editing products
+    ProductList.js     # Container for list/grid views
+    ProductRow.js      # Table row for list view
+    SearchBar.js       # Search input
+  data/
+    initialData.js     # Mock data for products
+  App.js               # Main application component
+  App.css              # Global styles
+  index.js             # Entry point
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## License
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is open source and available under the [MIT License](LICENSE).
