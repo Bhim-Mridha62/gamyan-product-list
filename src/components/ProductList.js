@@ -26,37 +26,41 @@ const ProductList = ({ products, viewMode, onEdit, selectedProductIds, onSelectP
                     ))}
                 </div>
             ) : (
-                <table className="product-table">
-                    <thead>
-                        <tr>
-                            <th className="checkbox-cell">
-                                <input
-                                    type="checkbox"
-                                    checked={allSelected}
-                                    onChange={onSelectAll}
+                <div className="table-container">
+                    <table className="product-table">
+                        <thead>
+                            <tr>
+                                <th className="checkbox-cell">
+                                    <input
+                                        type="checkbox"
+                                        checked={allSelected}
+                                        onChange={onSelectAll}
+                                    />
+                                </th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Category</th>
+                                <th>Created At</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Tags</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.map(product => (
+                                <ProductRow
+                                    key={product.id}
+                                    product={product}
+                                    onEdit={onEdit}
+                                    selected={selectedProductIds.includes(product.id)}
+                                    onSelect={onSelectProduct}
                                 />
-                            </th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                            <th>Created At</th>
-                            <th>Stock</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map(product => (
-                            <ProductRow
-                                key={product.id}
-                                product={product}
-                                onEdit={onEdit}
-                                selected={selectedProductIds.includes(product.id)}
-                                onSelect={onSelectProduct}
-                            />
-                        ))}
-                    </tbody>
-                </table>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );

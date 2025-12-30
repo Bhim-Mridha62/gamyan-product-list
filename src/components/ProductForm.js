@@ -25,6 +25,16 @@ const ProductForm = ({ product, onSave, onCancel }) => {
                 tags: product.tags ? product.tags.join(', ') : ''
             });
         }
+
+        // Lock body scroll when modal is open
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+
+        return () => {
+            // Restore body scroll when modal is closed
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+        };
     }, [product]);
 
     const validate = () => {
@@ -41,6 +51,7 @@ const ProductForm = ({ product, onSave, onCancel }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
+
             const tagsArray = formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
             onSave({
                 ...product,

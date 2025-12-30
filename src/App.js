@@ -83,6 +83,7 @@ function App() {
   };
 
   const handleSaveProduct = (product) => {
+
     if (editingProduct) {
       setProducts(products.map(p => p.id === product.id ? product : p));
     } else {
@@ -90,8 +91,6 @@ function App() {
         ...product,
         id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
         createdAt: new Date().toISOString(),
-        isActive: true,
-        tags: [] // Default empty tags for new products
       };
       setProducts([newProduct, ...products]);
     }

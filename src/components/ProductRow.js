@@ -36,6 +36,14 @@ const ProductRow = ({ product, onEdit, selected, onSelect }) => {
                 </span>
             </td>
             <td>
+                <div className="tags-cell">
+                    {product.tags && product.tags.map(tag => (
+                        <span key={tag} className="tag-badge">#{tag}</span>
+                    ))}
+                </div>
+            </td>
+            <td className="description-cell">{product.description}</td>
+            <td>
                 <button className="edit-btn-small" onClick={() => onEdit(product)}>Edit</button>
             </td>
         </tr>
