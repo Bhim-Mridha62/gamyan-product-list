@@ -141,3 +141,20 @@
   display: block;
   margin-bottom: 10px;
 }
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.active {
+  background-color: #e6f4ea;
+  color: #2e7d32;
+}
+
+.status-badge.inactive {
+  background-color: #fdecea;
+  color: #c62828;
+}

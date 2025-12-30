@@ -18,6 +18,7 @@ const ProductRow = ({ product, onEdit, selected, onSelect }) => {
             </td>
             <td>₹{product.price}</td>
             <td>{product.category}</td>
+            <td>{new Date(product.createdAt).toLocaleDateString()}</td>
             <td
                 className={
                     product.stock < 10
@@ -28,6 +29,11 @@ const ProductRow = ({ product, onEdit, selected, onSelect }) => {
                 }
             >
                 {product.stock}
+            </td>
+            <td>
+                <span className={`status-badge ${product.isActive ? 'active' : 'inactive'}`}>
+                    {product.isActive ? 'Active' : 'Inactive'}
+                </span>
             </td>
             <td>
                 <button className="edit-btn-small" onClick={() => onEdit(product)}>Edit</button>

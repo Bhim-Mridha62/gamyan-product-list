@@ -12,6 +12,7 @@ function App() {
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'grid'
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [filterActive, setFilterActive] = useState('All');
   const [sortOption, setSortOption] = useState('none');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -31,7 +32,10 @@ function App() {
       const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.category.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-      return matchesSearch && matchesCategory;
+      const matchesActive = filterActive === 'All' ||
+        (filterActive === 'Active' && product.isActive) ||
+        (filterActive === 'Inactive' && !product.isActive);
+      return matchesSearch && matchesCategory && matchesActive;
     });
 
     // Sorting logic
@@ -53,7 +57,7 @@ function App() {
     }
 
     return result;
-  }, [products, searchQuery, selectedCategory, sortOption]);
+  }, [products, searchQuery, selectedCategory, sortOption, filterActive]);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -66,7 +70,7 @@ function App() {
   useEffect(() => {
     setCurrentPage(1);
     setSelectedProductIds([]); // Clear selection on filter change
-  }, [searchQuery, selectedCategory, sortOption, itemsPerPage]);
+  }, [searchQuery, selectedCategory, sortOption, itemsPerPage, filterActive]);
 
   const handleAddProduct = () => {
     setEditingProduct(null);
@@ -177,6 +181,8 @@ function App() {
             onCategoryChange={setSelectedCategory}
             sortOption={sortOption}
             onSortChange={setSortOption}
+            filterActive={filterActive}
+            onFilterActiveChange={setFilterActive}
           />
         </div>
 

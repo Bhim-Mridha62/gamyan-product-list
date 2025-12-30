@@ -39,7 +39,9 @@ const ProductList = ({ products, viewMode, onEdit, selectedProductIds, onSelectP
                             <th>Name</th>
                             <th>Price</th>
                             <th>Category</th>
+                            <th>Created At</th>
                             <th>Stock</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

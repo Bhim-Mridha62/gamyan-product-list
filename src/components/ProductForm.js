@@ -7,7 +7,9 @@ const ProductForm = ({ product, onSave, onCancel }) => {
         price: '',
         category: '',
         stock: '',
-        description: ''
+        description: '',
+        isActive: true,
+        tags: ''
     });
     const [errors, setErrors] = useState({});
 
@@ -18,7 +20,9 @@ const ProductForm = ({ product, onSave, onCancel }) => {
                 price: product.price,
                 category: product.category,
                 stock: product.stock,
-                description: product.description || ''
+                description: product.description || '',
+                isActive: product.isActive !== undefined ? product.isActive : true,
+                tags: product.tags ? product.tags.join(', ') : ''
             });
         }
     }, [product]);
@@ -37,7 +41,14 @@ const ProductForm = ({ product, onSave, onCancel }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            onSave({ ...product, ...formData, price: Number(formData.price), stock: Number(formData.stock) });
+            const tagsArray = formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+            onSave({
+                ...product,
+                ...formData,
+                price: Number(formData.price),
+                stock: Number(formData.stock),
+                tags: tagsArray
+            });
         }
     };
 
@@ -102,6 +113,27 @@ const ProductForm = ({ product, onSave, onCancel }) => {
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="form-group checkbox-group">
+                        <label>
+                            Is Active
+                            <input
+                                type="checkbox"
+                                checked={formData.isActive}
+                                onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                            />
+                        </label>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Tags (comma separated)</label>
+                        <input
+                            type="text"
+                            value={formData.tags}
+                            onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                            placeholder="e.g. electronics, sale, new"
                         />
                     </div>
 

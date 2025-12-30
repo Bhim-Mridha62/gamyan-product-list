@@ -123,3 +123,12 @@
 .save-btn:hover {
   background-color: var(--primary-hover);
 }
+.checkbox-group label {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.checkbox-group input {
+  width: fit-content !important;
+}
