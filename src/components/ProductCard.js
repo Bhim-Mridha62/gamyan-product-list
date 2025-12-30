@@ -18,7 +18,14 @@ const ProductCard = ({ product, onEdit, selected, onSelect }) => {
             <p className="product-description">{product.description}</p>
             <div className="product-details">
                 <span className="product-price">₹{product.price}</span>
-                <span className={`product-stock ${product.stock < 10 ? 'low-stock' : ''}`}>
+                <span
+                    className={`product-stock ${product.stock < 10
+                            ? 'stock-low'
+                            : product.stock <= 20
+                                ? 'stock-medium'
+                                : 'stock-high'
+                        }`}
+                >
                     Stock: {product.stock}
                 </span>
             </div>

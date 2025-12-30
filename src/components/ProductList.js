@@ -5,7 +5,10 @@ import './ProductList.css';
 
 const ProductList = ({ products, viewMode, onEdit, selectedProductIds, onSelectProduct, onSelectAll, allSelected }) => {
     if (products.length === 0) {
-        return <div className="no-products">No products found.</div>;
+        return <div className="no-products">
+            <span className="no-products-icon">📦</span>
+            <p>No products found.</p>
+        </div>
     }
 
     return (

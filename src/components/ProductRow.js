@@ -18,7 +18,17 @@ const ProductRow = ({ product, onEdit, selected, onSelect }) => {
             </td>
             <td>₹{product.price}</td>
             <td>{product.category}</td>
-            <td className={product.stock < 10 ? 'low-stock' : ''}>{product.stock}</td>
+            <td
+                className={
+                    product.stock < 10
+                        ? 'stock-low'
+                        : product.stock <= 20
+                            ? 'stock-medium'
+                            : 'stock-high'
+                }
+            >
+                {product.stock}
+            </td>
             <td>
                 <button className="edit-btn-small" onClick={() => onEdit(product)}>Edit</button>
             </td>
